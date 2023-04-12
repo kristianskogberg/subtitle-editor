@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import useDragComponent from "../../hooks/UseDragComponent";
 
 import { useDispatch, useSelector } from "react-redux";
-import { editSubtitleItemTimeline } from "../../features/subtitle/subtitleSlice";
+
 import { moveCursor, setPlaytime } from "../../features/video/videoSlice";
 
 export default function PlaytimeCursor({ item, elementId }) {
