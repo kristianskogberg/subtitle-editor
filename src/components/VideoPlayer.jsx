@@ -13,7 +13,7 @@ import {
   RiArrowGoForwardLine as ForwardsIcon,
 } from "react-icons/ri";
 
-import { shallowEqual, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setPlaytime, setDuration } from "../features/video/videoSlice";
 import { useSelector } from "react-redux";
 import convertSecToTimelineString from "../utils/convertSecToTimelineString";

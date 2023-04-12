@@ -4,16 +4,6 @@ import Button from "./Button";
 import { useSelector, useDispatch } from "react-redux";
 import { upload } from "../features/video/videoSlice";
 
-//import subtitles from "../../test.vtt";
-import ReactPlayer from "react-player";
-
-import {
-  RiArrowGoBackLine as BackwardsIcon,
-  RiArrowGoForwardLine as ForwardsIcon,
-  //RiPauseCircleLine as PauseIcon,
-  //RiPlayCircleLine as PlayIcon,
-} from "react-icons/ri";
-
 import {
   FiUpload as UploadIcon,
   FiDownload as DownloadIcon,

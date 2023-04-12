@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHorizontalScroll } from "../hooks/UseHorizontalScroll";
 
 import SubtitleItem from "./SubtitleItem";
