@@ -1,8 +1,5 @@
 import React from "react";
-import Button from "../Button";
-import SubtitleItem from "../SubtitleItem";
-import Test from "../Test";
-import SubtitleTimeline from "../SubtitleTimeline";
+
 import UploadSubtitles from "../UploadSubtitles";
 import UploadVideo from "../UploadVideo";
 import SubtitleTimelineOld from "../TimelineOld";

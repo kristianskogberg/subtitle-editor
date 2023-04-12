@@ -7,7 +7,7 @@ const reducer = combineReducers({
   video: videoReducer,
 });
 
-const initialState = {};
+
 
 export const store = configureStore({
   reducer,
