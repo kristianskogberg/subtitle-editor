@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(177, 177, 177);
+}
+
+.textarea-wrapper {
+  display: flex;
+  gap: 10px;
+  /* font-family: monospace; */
+  line-height: 30px;
+  background: #282a3a;
+  overflow-y: scroll;
+  padding: 2px 12px;
+  /*height: 500px;*/
+  width: 100%;
+}
+/*
+textarea {
+
+  padding: 0 10px;
+  border: 0;
+  background: #282a3a;
+  color: #fff;
+  width: 100%;
+  height: 100vh;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+}
+*/
+
+.line-numbers {
+  width: 20px;
+  text-align: right;
+}
+
+.line-numbers span {
+  counter-increment: linenumber;
+}
+
+.line-numbers span::before {
+  content: counter(linenumber);
+  display: block;
+  color: #506882;
+}
+
+.input-box {
+  width: 200px;
+  height: max-content;
+  color: white;
+  padding: 0.5rem;
+  outline: none;
+  background: hsl(222, 22%, 20%);
+  border: 1px solid transparent;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  border-radius: 0.25rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.input-box:hover {
+  border-color: hsl(222, 22%, 30%);
+}
+
+.input-box:focus {
+  border-color: hsl(222, 22%, 40%);
+}
