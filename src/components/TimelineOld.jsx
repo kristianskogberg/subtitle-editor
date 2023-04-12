@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useHorizontalScroll } from "../hooks/UseHorizontalScroll";
-import useDragComponent from "../hooks/UseDragComponent";
+
 import SubtitleItem from "./SubtitleItem";
 import PlaytimeCursor from "./timeline/PlaytimeCursor";
 
