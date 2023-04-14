@@ -205,7 +205,7 @@ export default function UploadSubtitles() {
                         <span className="absolute inset-y-0 left-1 flex items-center pl-1">
                           <TimeIcon size={20} />
                         </span>
-                        <label className="py-1 px-4 text-sm bg-white dark:bg-gray-900 w-full rounded-lg pl-8  border-2 border-gray-300 dark:border-gray-500">
+                        <label className="py-1 px-4 text-sm  w-full rounded-lg pl-8  ">
                           {item.startTime}
                         </label>
                       </div>
@@ -216,7 +216,7 @@ export default function UploadSubtitles() {
                         <span className="absolute inset-y-0 left-1 flex items-center pl-1">
                           <TimeIcon size={20} />
                         </span>
-                        <label className="py-1 px-4 text-sm bg-white dark:bg-gray-900 w-full rounded-lg pl-8  border-2 border-gray-300 dark:border-gray-500">
+                        <label className="py-1 px-4 text-sm  w-full rounded-lg pl-8  ">
                           {item.endTime}
                         </label>
                       </div>
@@ -255,8 +255,8 @@ export default function UploadSubtitles() {
             </div>
           </form>
         </div>
-      )}{" "}
-      <div className="bg-white dark:bg-gray-900 flex w-full py-4  justify-center">
+      )}
+      <div className="bg-white dark:bg-gray-900 flex w-full py-6  justify-center">
         <Button
           text={"Download Subtitles"}
           icon={<DownloadIcon />}

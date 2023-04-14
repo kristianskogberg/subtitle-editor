@@ -140,7 +140,7 @@ export default function PlaytimeCursor({ item, elementId, zoomLevel }) {
   return (
     <div
       id={elementId}
-      className={` z-10 h-full absolute bg-amber-500 `}
+      className={` z-10 h-full absolute bg-emerald-700 dark:bg-emerald-500 `}
       style={{ left: Math.floor(currentPlaytime * zoomLevel), width: `${2}px` }}
     ></div>
   );

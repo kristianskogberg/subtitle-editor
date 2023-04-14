@@ -159,11 +159,11 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
   }
 
   function handleFastForward() {
-    videoRef.current.currentTime += 5;
+    videoRef.current.currentTime += 10;
   }
 
   function handleRewind() {
-    videoRef.current.currentTime -= 5;
+    videoRef.current.currentTime -= 10;
   }
 
   useEffect(() => {
@@ -174,14 +174,14 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
   }, [currentPlaytimeTimeline]);
 
   return (
-    <div className=" w-full h-full flex flex-col  items-center justify-center ">
+    <div className="flex flex-col w-full ">
       <div
         className="relative w-full h-full flex flex-col cursor-pointer items-center justify-center  "
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
         onClick={handlePlayPauseClick}
       >
-        <div className="absolute text-3xl  bottom-4  h-full w-full text-center">
+        <div className="absolute text-3xl   h-full w-full text-center">
           <div className="h-full w-full flex items-end justify-center  whitespace-pre-wrap">
             <span>
               {subtitles?.map((item) => {
@@ -194,7 +194,7 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
                 }
                 return (
                   <p
-                    className="bg-black bg-opacity-70 text-white dark:text-white"
+                    className="bg-black mb-4 bg-opacity-70 text-white dark:text-white"
                     key={item.id}
                   >
                     {item.textContent}
@@ -205,27 +205,17 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
           </div>
         </div>
         <video
-          className="flex-shrink-1 h-full w-full object-contain  bg-black -z-10 "
+          className=" h-full w-full  bg-black -z-10 "
           // onClick={handlePlayPauseClick}
           ref={videoRef}
           autoPlay={autoPlay}
           //muted={muted}
           src={src}
         ></video>
-
-        <div
-          id="timeline-container"
-          style={{ opacity: 0 }}
-          className={` bg-gradient-to-b from-transparent to-black w-full h-[2rem] absolute  duration-300 left-0 bottom-0 items-end px-5`}
-        >
-          <div
-            className="flex flex-row w-full items-center  "
-            onClick={(e) => e.stopPropagation()}
-          ></div>
-        </div>
       </div>
       <>
         {/* timeline */}
+
         <div className="flex w-full cursor-pointer bottom-0">
           <div
             className=" flex w-full h-[10px]  bg-gray-500 overflow-hidden z-10"
@@ -241,12 +231,18 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
             </div>
           </div>
         </div>
-        <div className=" pt-4 flex w-full justify-between items-center z-20">
-          <div className="flex items-center gap-2">
-            <button className="" onClick={handlePlayPauseClick}>
+        <div className="pt-4 flex w-full justify-between items-center z-20">
+          <div className="flex items-center ">
+            <button onClick={handleRewind}>
+              <BackwardsIcon size={24} />
+            </button>
+            <button className="px-2" onClick={handlePlayPauseClick}>
               {isPlaying ? <PauseIcon size={50} /> : <PlayIcon size={50} />}
             </button>
-            <div className="flex flex-row text-xl ">
+            <button onClick={handleFastForward}>
+              <ForwardsIcon size={24} />
+            </button>
+            <div className="flex flex-row text-xl pl-5 ">
               <p>{convertSecToTimelineString(currentTime)}</p>
 
               <label className="px-1 text-gray-500">/</label>

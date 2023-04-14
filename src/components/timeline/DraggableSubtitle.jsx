@@ -109,7 +109,7 @@ export default function DraggableSubtitle({ item, index, zoomLevel }) {
         bounds={"parent"}
         minWidth={50}
         enableResizing={{ right: true, left: true }}
-        className={`  border-2  bg-white dark:bg-gray-900 px-2  border-transparent  rounded-lg  `}
+        className={`  border-2  bg-white dark:bg-gray-900 px-2 border-transparent  rounded-lg  `}
         style={{
           backgroundColor: `${
             focus
@@ -120,7 +120,7 @@ export default function DraggableSubtitle({ item, index, zoomLevel }) {
           borderColor: `${
             focus
               ? `${theme === "light" ? "rgb(31 41 55)" : "white"}`
-              : "rgb(107 114 128)"
+              : "transparent"
           }`,
           zIndex: `${focus ? "1000" : "10"}`,
         }}

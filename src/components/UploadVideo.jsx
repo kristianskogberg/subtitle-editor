@@ -41,8 +41,8 @@ export default function UploadVideo() {
   }, [subtitles]);
 
   return (
-    <div className="flex  flex-col h-full aspect-video max-w-full z-10">
-      <div className=" flex h-full flex-col  rounded-xl">
+    <div className="z-10">
+      <div className=" flex h-full flex- rounded-xl">
         {videoUrl === "" ? (
           <form
             onSubmit={handleSubmit}
@@ -64,13 +64,10 @@ export default function UploadVideo() {
             />
           </form>
         ) : (
-          <div className="flex w-full  flex-col">
-            <div className="relative w-full h-full">
-              <div className="w-full"></div>
-              <VideoPlayer src={videoUrl} autoPlay={false} muted={true} />
-            </div>
+          <div className="flex w-full flex-col h-full items-center justify-center">
+            <VideoPlayer src={videoUrl} autoPlay={false} muted={true} />
           </div>
-        )}{" "}
+        )}
       </div>
     </div>
   );
