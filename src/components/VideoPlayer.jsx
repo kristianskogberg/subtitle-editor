@@ -9,6 +9,11 @@ import {
 } from "react-icons/bs";
 
 import {
+  FiUpload as UploadIcon,
+  FiDownload as DownloadIcon,
+} from "react-icons/fi";
+
+import {
   RiArrowGoBackLine as BackwardsIcon,
   RiArrowGoForwardLine as ForwardsIcon,
 } from "react-icons/ri";
@@ -192,7 +197,7 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
   }, [currentPlaytimeTimeline]);
 
   return (
-    <div className=" p-6 rounded-xl w-full flex flex-col ">
+    <div className="p-1 lg:p-6 rounded-xl w-full flex flex-col ">
       <div
         className="relative w-full h-full flex flex-col  items-center justify-center  "
         onMouseOver={onMouseOver}
@@ -233,7 +238,7 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
                 <Button
                   text={"Select a Video (.mp4)"}
                   type="submit"
-                  //icon={<UploadIcon size={24} />}
+                  icon={<UploadIcon size={24} />}
                 />
               </span>
               <input
