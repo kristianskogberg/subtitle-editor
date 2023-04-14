@@ -23,6 +23,7 @@ export const videoSlice = createSlice({
         const videoUrl = URL.createObjectURL(action.payload.target.files[0]);
         state.url = videoUrl;
         state.video = action.payload.target.files[0];
+        console.log(action.payload.target.files[0]);
       }
     },
     setPlaytime: (state, action) => {

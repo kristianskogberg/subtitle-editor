@@ -13,7 +13,6 @@ export default function SubtitleTimeline() {
   const [zoomLevel, setZoomLevel] = useState(30);
 
   function handleZoom(e) {
-    console.log(e.deltaY);
     const INTERVAL = 5;
     if (e.deltaY < 0) {
       if (zoomLevel >= 50) return;

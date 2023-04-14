@@ -138,47 +138,48 @@ export default function UploadSubtitles() {
   }
 
   return (
-    <div className="flex flex-col  h-full w-full bg-gray-100 dark:bg-gray-800 dark:border-gray-900  border-gray-200">
-      {subtitleItems.length === 0 ? (
-        <form className="flex flex-col gap-10 items-center justify-center w-full h-full ">
-          <div>
-            <Button
-              text={"Upload Subtitles (.srt / .vtt)"}
-              onClick={handleUploadSubtitles}
-              icon={<UploadIcon size={24} />}
-            />
+    <div className="flex flex-col p-6 h-full w-full ">
+      <div className="flex flex-col bg-gray-100 h-full w-full  dark:bg-gray-800 dark:border-gray-900  border-gray-200">
+        {subtitleItems.length === 0 ? (
+          <form className="h-full border-2 border-gray-400 flex flex-col gap-10 items-center justify-center w-full  ">
+            <div>
+              <Button
+                text={"Upload Subtitles (.srt / .vtt)"}
+                onClick={handleUploadSubtitles}
+                icon={<UploadIcon size={24} />}
+              />
 
-            <input
-              type="file"
-              accept=".vtt"
-              ref={hiddenFileInputRef}
-              onChange={handleFileChange}
-              className="hidden"
-            />
-          </div>
-          <p>or</p>
-          <div>
-            <Button
-              text={"Create a new subtitle file"}
-              onClick={handleCreateNewFile}
-              icon={<AddFileIcon size={24} />}
-            />
-          </div>
-        </form>
-      ) : (
-        <div className="flex flex-col overflow-auto  w-full h-full   justify-start  items-center">
-          <form className="h-full   w-full overflow-auto   ">
-            {subtitleItems.map((item, index) => {
-              return (
-                <div
-                  className={`${
-                    (index + 1) % 2 === 0
-                      ? "bg-gray-100 dark:bg-gray-700"
-                      : "bg-gray-100 dark:bg-gray-800"
-                  }   `}
-                  key={item.id}
-                >
-                  {/*
+              <input
+                type="file"
+                accept=".vtt"
+                ref={hiddenFileInputRef}
+                onChange={handleFileChange}
+                className="hidden"
+              />
+            </div>
+            <p>or</p>
+            <div>
+              <Button
+                text={"Create a new subtitle file"}
+                onClick={handleCreateNewFile}
+                icon={<AddFileIcon size={24} />}
+              />
+            </div>
+          </form>
+        ) : (
+          <div className="border-2 border-gray-400 flex flex-col overflow-auto  w-full h-full   justify-start  items-center">
+            <form className="h-full   w-full overflow-auto   ">
+              {subtitleItems.map((item, index) => {
+                return (
+                  <div
+                    className={`${
+                      (index + 1) % 2 === 0
+                        ? "bg-gray-100 dark:bg-gray-700"
+                        : "bg-gray-100 dark:bg-gray-800"
+                    }   `}
+                    key={item.id}
+                  >
+                    {/*
 
                   <div className="relative ">
                     <code className="absolute z-10 mx-2 text-gray-600 dark:text-gray-300">
@@ -197,73 +198,77 @@ export default function UploadSubtitles() {
                   </div>
                 */}
 
-                  <div className="grid grid-cols-1 gap-3 p-2">
-                    <div className="flex   w-full justify-between items-center">
-                      <label className="pr-2 ">{index + 1}</label>
+                    <div className="grid grid-cols-1 gap-3 p-2">
+                      <div className="flex   w-full justify-between items-center">
+                        <label className="pr-2 ">{index + 1}</label>
 
-                      <div className="relative ">
-                        <span className="absolute inset-y-0 left-1 flex items-center pl-1">
-                          <TimeIcon size={20} />
-                        </span>
-                        <label className="py-1 px-4 text-sm  w-full rounded-lg pl-8  ">
-                          {item.startTime}
-                        </label>
+                        <div className="relative ">
+                          <span className="absolute inset-y-0 left-1 flex items-center pl-1">
+                            <TimeIcon size={20} />
+                          </span>
+                          <label className="py-1 px-4 text-sm  w-full rounded-lg pl-8  ">
+                            {item.startTime}
+                          </label>
+                        </div>
+                        <div className="text-black px-3 dark:text-white flex items-center  justify-center">
+                          <RightArrowIcon size={24} />
+                        </div>
+                        <div className="relative ">
+                          <span className="absolute inset-y-0 left-1 flex items-center pl-1">
+                            <TimeIcon size={20} />
+                          </span>
+                          <label className="py-1 px-4 text-sm  w-full rounded-lg pl-8  ">
+                            {item.endTime}
+                          </label>
+                        </div>
+                        <div className="relative pl-2 ">
+                          <button
+                            type="button"
+                            onClick={(e) =>
+                              handleDeleteSubtitleItem(e, item.id)
+                            }
+                            className=" z-10 text-xl flex  text-gray-500 dark:text-gray-300 "
+                          >
+                            <DeleteIcon />
+                          </button>
+                        </div>
                       </div>
-                      <div className="text-black px-3 dark:text-white flex items-center  justify-center">
-                        <RightArrowIcon size={24} />
+                      <div>
+                        <textarea
+                          className="w-full h-auto resize-none bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-500 rounded-lg p-2"
+                          value={item.textContent}
+                          rows={2}
+                          placeholder="Type your subtitle here..."
+                          onChange={(e) => {
+                            handleEditSubtitleItem(e, item.id, "textContent");
+                          }}
+                        />
                       </div>
-                      <div className="relative ">
-                        <span className="absolute inset-y-0 left-1 flex items-center pl-1">
-                          <TimeIcon size={20} />
-                        </span>
-                        <label className="py-1 px-4 text-sm  w-full rounded-lg pl-8  ">
-                          {item.endTime}
-                        </label>
-                      </div>
-                      <div className="relative pl-2 ">
-                        <button
-                          type="button"
-                          onClick={(e) => handleDeleteSubtitleItem(e, item.id)}
-                          className=" z-10 text-xl flex  text-gray-500 dark:text-gray-300 "
-                        >
-                          <DeleteIcon />
-                        </button>
-                      </div>
-                    </div>
-                    <div>
-                      <textarea
-                        className="w-full h-auto resize-none bg-white dark:bg-gray-900 border-2 border-gray-300 dark:border-gray-500 rounded-lg p-2"
-                        value={item.textContent}
-                        rows={2}
-                        placeholder="Type your subtitle here..."
-                        onChange={(e) => {
-                          handleEditSubtitleItem(e, item.id, "textContent");
-                        }}
-                      />
                     </div>
                   </div>
-                </div>
-              );
-            })}
-            <div className="w-full flex justify-center py-6">
-              <Button
-                text="Add subtitle"
-                type="submit"
-                onClick={handleAddNewSubtitleItem}
-                icon={<AddIcon size={24} />}
-              />
-            </div>
-          </form>
+                );
+              })}
+              <div className="w-full flex justify-center py-6">
+                <Button
+                  text="Add subtitle"
+                  type="submit"
+                  onClick={handleAddNewSubtitleItem}
+                  icon={<AddIcon size={24} />}
+                />
+              </div>
+            </form>
+          </div>
+        )}
+
+        <div className="bg-white dark:bg-gray-900 flex w-full py-6  justify-center">
+          <Button
+            text={"Download Subtitles"}
+            icon={<DownloadIcon />}
+            color={"primary"}
+            onClick={handleDownloadSubtitles}
+            disabled={subtitleItems.length === 0 ? true : false}
+          />
         </div>
-      )}
-      <div className="bg-white dark:bg-gray-900 flex w-full py-6  justify-center">
-        <Button
-          text={"Download Subtitles"}
-          icon={<DownloadIcon />}
-          color={"primary"}
-          onClick={handleDownloadSubtitles}
-          disabled={subtitleItems.length === 0 ? true : false}
-        />
       </div>
     </div>
   );

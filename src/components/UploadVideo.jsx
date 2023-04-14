@@ -10,6 +10,7 @@ import {
 } from "react-icons/fi";
 import VideoPlayer from "./VideoPlayer";
 import ButtonSection from "./ButtonSection";
+import VideoTest from "./VideoTest";
 
 export default function UploadVideo() {
   const videoUrl = useSelector((state) => state.video.url);
@@ -36,38 +37,14 @@ export default function UploadVideo() {
     dispatch(upload(e));
   }
 
-  useEffect(() => {
-    setSub(subtitles);
-  }, [subtitles]);
-
   return (
-    <div className="z-10">
-      <div className=" flex h-full flex- rounded-xl">
-        {videoUrl === "" ? (
-          <form
-            onSubmit={handleSubmit}
-            className="h-full w-full rounded-xl border-2 border-gray-500 border-dashed"
-          >
-            <span className="flex  items-center justify-center w-full h-full">
-              <Button
-                text={"Upload a Video (.mp4)"}
-                type="submit"
-                icon={<UploadIcon size={24} />}
-              />
-            </span>
-            <input
-              type="file"
-              accept="video/mp4"
-              ref={hiddenFileInputRef}
-              onChange={handleVideoChange}
-              className="hidden"
-            />
-          </form>
-        ) : (
-          <div className="flex w-full flex-col h-full items-center justify-center">
-            <VideoPlayer src={videoUrl} autoPlay={false} muted={true} />
+    <div className="flex  flex-col h-full   z-10">
+      <div className=" flex h-full  w-full rounded-xl">
+        <div className="flex w-full h-full">
+          <div className="relative w-full h-full">
+            <VideoPlayer src={videoUrl} autoPlay={true} muted={true} />
           </div>
-        )}
+        </div>
       </div>
     </div>
   );

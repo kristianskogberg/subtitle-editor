@@ -14,9 +14,11 @@ import {
 } from "react-icons/ri";
 
 import { useDispatch } from "react-redux";
-import { setPlaytime, setDuration } from "../features/video/videoSlice";
+import { setPlaytime, setDuration, upload } from "../features/video/videoSlice";
 import { useSelector } from "react-redux";
 import convertSecToTimelineString from "../utils/convertSecToTimelineString";
+import Button from "./Button";
+const videoUrl = "";
 
 export default function VideoPlayer({ src, autoPlay, muted }) {
   const subtitles = useSelector((state) => state.subtitle.subtitleItems);
@@ -24,6 +26,7 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
   const currentPlaytimeTimeline = useSelector(
     (state) => state.video.currentPlaytimeTimeline
   );
+  const videoUrl = useSelector((state) => state.video.url);
   const videoRef = useRef(null);
   const progressRef = useRef(null);
   const bufferRef = useRef(null);
@@ -37,12 +40,28 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const dispatch = useDispatch();
   const [volumeLevel, setVolumeLevel] = useState(0);
+  const hiddenFileInputRef = useRef(null);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleUploadVideoClick();
+  }
+  function handleUploadVideoClick() {
+    hiddenFileInputRef.current.click();
+  }
+
+  function handleVideoChange(e) {
+    //setImageUrl(URL.createObjectURL(e.target.files[0]));
+    e.preventDefault();
+    dispatch(upload(e));
+  }
 
   useEffect(() => {
     if (!videoRef.current) return;
 
     videoRef.current.volume = volumeLevel;
     const element = videoRef.current;
+    dispatch(setDuration(element.duration));
 
     function onPlay() {
       if (isWaiting) setIsWaiting(false);
@@ -109,7 +128,7 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
       element.removeEventListener("progress", onProgress);
       element.removeEventListener("durationchange", onDurationChange);
     };
-  }, [videoRef.current]);
+  }, [videoRef.current, videoUrl]);
 
   function seekToPosition(e) {
     if (!videoRef.current) return;
@@ -159,29 +178,28 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
   }
 
   function handleFastForward() {
-    videoRef.current.currentTime += 10;
+    videoRef.current.currentTime += 5;
   }
 
   function handleRewind() {
-    videoRef.current.currentTime -= 10;
+    videoRef.current.currentTime -= 5;
   }
 
   useEffect(() => {
     if (!videoRef.current) return;
 
-    console.log(currentPlaytimeTimeline);
     videoRef.current.currentTime = currentPlaytimeTimeline;
   }, [currentPlaytimeTimeline]);
 
   return (
-    <div className="flex flex-col w-full ">
+    <div className=" p-6 rounded-xl w-full flex flex-col ">
       <div
-        className="relative w-full h-full flex flex-col cursor-pointer items-center justify-center  "
+        className="relative w-full h-full flex flex-col  items-center justify-center  "
         onMouseOver={onMouseOver}
         onMouseLeave={onMouseLeave}
         onClick={handlePlayPauseClick}
       >
-        <div className="absolute text-3xl   h-full w-full text-center">
+        <div className="absolute text-3xl  bottom-0 h-full w-full text-center">
           <div className="h-full w-full flex items-end justify-center  whitespace-pre-wrap">
             <span>
               {subtitles?.map((item) => {
@@ -204,21 +222,58 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
             </span>
           </div>
         </div>
-        <video
-          className=" h-full w-full  bg-black -z-10 "
-          // onClick={handlePlayPauseClick}
-          ref={videoRef}
-          autoPlay={autoPlay}
-          //muted={muted}
-          src={src}
-        ></video>
+
+        {videoUrl === "" ? (
+          <div className="h-[40vh] lg:h-[60vh] lg:w-[53.4vw] z-10 ">
+            <form
+              onSubmit={handleSubmit}
+              className="h-full w-full  bg-gray-200"
+            >
+              <span className="flex  items-center justify-center w-full h-full">
+                <Button
+                  text={"Select a Video (.mp4)"}
+                  type="submit"
+                  //icon={<UploadIcon size={24} />}
+                />
+              </span>
+              <input
+                type="file"
+                accept="video/mp4"
+                ref={hiddenFileInputRef}
+                onChange={handleVideoChange}
+                className="hidden"
+              />
+            </form>
+          </div>
+        ) : (
+          <div className="h-[40vh] lg:h-[60vh] lg:w-[53.4vw] ">
+            <video
+              className=" h-full w-full object-contain  bg-black -z-10 "
+              // onClick={handlePlayPauseClick}
+              ref={videoRef}
+              autoPlay={autoPlay}
+              //muted={muted}
+              src={src}
+            ></video>
+          </div>
+        )}
+
+        <div
+          id="timeline-container"
+          style={{ opacity: 0 }}
+          className={` bg-gradient-to-b from-transparent to-black w-full h-[2rem] absolute  duration-300 left-0 bottom-0 items-end px-5`}
+        >
+          <div
+            className="flex flex-row w-full items-center  "
+            onClick={(e) => e.stopPropagation()}
+          ></div>
+        </div>
       </div>
       <>
         {/* timeline */}
-
         <div className="flex w-full cursor-pointer bottom-0">
           <div
-            className=" flex w-full h-[10px]  bg-gray-500 overflow-hidden z-10"
+            className=" flex w-full h-[10px]  bg-gray-400 overflow-hidden z-10"
             onClick={seekToPosition}
           >
             <div className="flex relative w-full h-full">
@@ -231,18 +286,18 @@ export default function VideoPlayer({ src, autoPlay, muted }) {
             </div>
           </div>
         </div>
-        <div className="pt-4 flex w-full justify-between items-center z-20">
-          <div className="flex items-center ">
+        <div className=" pt-4 flex w-full justify-between items-center z-20">
+          <div className="flex items-center gap-2">
             <button onClick={handleRewind}>
               <BackwardsIcon size={24} />
             </button>
-            <button className="px-2" onClick={handlePlayPauseClick}>
+            <button className="" onClick={handlePlayPauseClick}>
               {isPlaying ? <PauseIcon size={50} /> : <PlayIcon size={50} />}
             </button>
             <button onClick={handleFastForward}>
               <ForwardsIcon size={24} />
             </button>
-            <div className="flex flex-row text-xl pl-5 ">
+            <div className="flex flex-row text-xl px-2">
               <p>{convertSecToTimelineString(currentTime)}</p>
 
               <label className="px-1 text-gray-500">/</label>
