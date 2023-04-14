@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { moveCursor, setPlaytime } from "../../features/video/videoSlice";
 
-export default function PlaytimeCursor({ item, elementId }) {
+export default function PlaytimeCursor({ item, elementId, zoomLevel }) {
   const dispatch = useDispatch();
   const currentPlaytime = useSelector((state) => state.video.currentPlaytime);
   const isMouseOverSubtitleItem = useSelector(
@@ -100,22 +100,16 @@ export default function PlaytimeCursor({ item, elementId }) {
       const cursorPosition = e.clientX - container.getBoundingClientRect().left;
       target.style.left = `${cursorPosition}px`;
 
-      /*  console.log(
-        "current playtiem: ",
-        currentPlaytime,
-        "xposition:",
-        cursorPosition / 30
-      ); */
-      dispatch(moveCursor(cursorPosition / 30));
+      dispatch(moveCursor(cursorPosition / zoomLevel));
     }
 
     //target.addEventListener("mouseover", onMouseOver);
     //target.addEventListener("mousedown", onMouseDown);
     //target.addEventListener("mouseup", onMouseUp);
 
-    container.addEventListener("mousedown", onMouseDown);
+    //container.addEventListener("mousedown", onMouseDown);
     // container.addEventListener("mousemove", onMouseMove);
-    container.addEventListener("mouseleave", onMouseLeave);
+    // container.addEventListener("mouseleave", onMouseLeave);
 
     const cleanup = () => {
       target.removeEventListener("mousedown", onMouseDown);
@@ -140,14 +134,14 @@ export default function PlaytimeCursor({ item, elementId }) {
   }, [startTime, itemIsMoving]);
 
   useEffect(() => {
-    console.log(isMouseOverSubtitleItem);
+    //console.log(isMouseOverSubtitleItem);
   }, [isMouseOverSubtitleItem]);
 
   return (
     <div
       id={elementId}
       className={` z-10 h-full absolute bg-amber-500 `}
-      style={{ left: Math.floor(currentPlaytime * 30), width: `${2}px` }}
+      style={{ left: Math.floor(currentPlaytime * zoomLevel), width: `${2}px` }}
     ></div>
   );
 }

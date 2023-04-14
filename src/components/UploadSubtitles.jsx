@@ -22,6 +22,7 @@ import {
 } from "react-icons/fi";
 
 import { MdArrowRightAlt as RightArrowIcon } from "react-icons/md";
+import ButtonSection from "./ButtonSection";
 
 export default function UploadSubtitles() {
   const content = useSelector((state) => state.subtitle.content);
@@ -137,9 +138,9 @@ export default function UploadSubtitles() {
   }
 
   return (
-    <div className="flex flex-col h-full w-full bg-gray-100 dark:bg-gray-800 dark:border-gray-900  border-gray-200">
+    <div className="flex flex-col  h-full w-full bg-gray-100 dark:bg-gray-800 dark:border-gray-900  border-gray-200">
       {subtitleItems.length === 0 ? (
-        <form className="flex flex-col gap-10 items-center justify-center w-full h-full  ">
+        <form className="flex flex-col gap-10 items-center justify-center w-full h-full ">
           <div>
             <Button
               text={"Upload Subtitles (.srt / .vtt)"}
@@ -165,18 +166,20 @@ export default function UploadSubtitles() {
           </div>
         </form>
       ) : (
-        <div className="flex  flex-col w-full  h-full justify-start  items-center">
-          <form className="flex flex-col  h-full w-full overflow-auto   ">
+        <div className="flex flex-col overflow-auto  w-full h-full   justify-start  items-center">
+          <form className="h-full   w-full overflow-auto   ">
             {subtitleItems.map((item, index) => {
               return (
                 <div
                   className={`${
                     (index + 1) % 2 === 0
-                      ? "bg-gray-200 dark:bg-gray-700"
+                      ? "bg-gray-100 dark:bg-gray-700"
                       : "bg-gray-100 dark:bg-gray-800"
                   }   `}
                   key={item.id}
                 >
+                  {/*
+
                   <div className="relative ">
                     <code className="absolute z-10 mx-2 text-gray-600 dark:text-gray-300">
                       {index + 1}
@@ -192,41 +195,39 @@ export default function UploadSubtitles() {
                       <DeleteIcon />
                     </button>
                   </div>
+                */}
 
-                  <div className="grid grid-cols-1 gap-4 p-6">
-                    <div className="grid grid-cols-9   w-full justify-center items-center">
-                      <div className="relative col-span-4">
+                  <div className="grid grid-cols-1 gap-3 p-2">
+                    <div className="flex   w-full justify-between items-center">
+                      <label className="pr-2 ">{index + 1}</label>
+
+                      <div className="relative ">
                         <span className="absolute inset-y-0 left-1 flex items-center pl-1">
-                          <TimeIcon size={24} />
+                          <TimeIcon size={20} />
                         </span>
-                        <input
-                          type="text"
-                          name="q"
-                          className="py-2 text-sm bg-white dark:bg-gray-900 w-full rounded-lg pl-10   border-2 border-gray-300 dark:border-gray-500"
-                          placeholder="Start Time"
-                          value={item.startTime}
-                          onChange={(e) =>
-                            handleEditSubtitleItem(e, item.id, "startTime")
-                          }
-                        />
+                        <label className="py-1 px-4 text-sm bg-white dark:bg-gray-900 w-full rounded-lg pl-8  border-2 border-gray-300 dark:border-gray-500">
+                          {item.startTime}
+                        </label>
                       </div>
-                      <div className="text-black dark:text-white flex items-center col-span-1  justify-center">
+                      <div className="text-black px-3 dark:text-white flex items-center  justify-center">
                         <RightArrowIcon size={24} />
                       </div>
-                      <div className="relative col-span-4">
+                      <div className="relative ">
                         <span className="absolute inset-y-0 left-1 flex items-center pl-1">
-                          <TimeIcon size={24} />
+                          <TimeIcon size={20} />
                         </span>
-                        <input
-                          type="text"
-                          name="q"
-                          className="py-2 text-sm bg-white dark:bg-gray-900 w-full rounded-lg pl-10  border-2 border-gray-300 dark:border-gray-500"
-                          placeholder="End Time"
-                          value={item.endTime}
-                          onChange={(e) =>
-                            handleEditSubtitleItem(e, item.id, "endTime")
-                          }
-                        />
+                        <label className="py-1 px-4 text-sm bg-white dark:bg-gray-900 w-full rounded-lg pl-8  border-2 border-gray-300 dark:border-gray-500">
+                          {item.endTime}
+                        </label>
+                      </div>
+                      <div className="relative pl-2 ">
+                        <button
+                          type="button"
+                          onClick={(e) => handleDeleteSubtitleItem(e, item.id)}
+                          className=" z-10 text-xl flex  text-gray-500 dark:text-gray-300 "
+                        >
+                          <DeleteIcon />
+                        </button>
                       </div>
                     </div>
                     <div>
@@ -239,14 +240,6 @@ export default function UploadSubtitles() {
                           handleEditSubtitleItem(e, item.id, "textContent");
                         }}
                       />
-
-                      {/*    <div
-                          className="w-full h-auto  bg-white border-2 border-gray-300 rounded-lg p-2"
-                          contentEditable={true}
-                          onChange={(e) => console.log(e.target.value)}
-                        >
-                          {item.textContent}
-                        </div>*/}
                     </div>
                   </div>
                 </div>
@@ -261,16 +254,17 @@ export default function UploadSubtitles() {
               />
             </div>
           </form>
-
-          {/*  <textarea
-              type="text"
-              rows={10}
-              className=" rounded-xl resize-none w-full h-full overflow-y-scroll border-2 border-primary  p-2"
-              value={content}
-              onChange={handleEditSrt}
-        /> */}
         </div>
-      )}
+      )}{" "}
+      <div className="bg-white dark:bg-gray-900 flex w-full py-4  justify-center">
+        <Button
+          text={"Download Subtitles"}
+          icon={<DownloadIcon />}
+          color={"primary"}
+          onClick={handleDownloadSubtitles}
+          disabled={subtitleItems.length === 0 ? true : false}
+        />
+      </div>
     </div>
   );
 }

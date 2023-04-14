@@ -11,6 +11,7 @@ const initialState = {
   subtitleItems: [],
   isLoading: false,
   isMouseOverSubtitleItem: false,
+  theme: "light",
 };
 
 /*
@@ -59,13 +60,10 @@ export const subtitleSlice = createSlice({
 
       state.file = element.href;
 
-      console.log(element.href);
-
       const content = action.payload.split("\n\n");
       const rows = action.payload.split("\n");
 
       state.rows = rows;
-      console.log(content);
 
       content.forEach((e, index) => {
         //console.log(e);
@@ -179,8 +177,6 @@ export const subtitleSlice = createSlice({
 
           const { ms, shortFormat } = convertTimeToMs(startTime);
 
-          console.log(shortFormat);
-
           subtitleItems.push({
             id: uuidv4(),
             startTime: startTime,
@@ -204,14 +200,31 @@ export const subtitleSlice = createSlice({
       state.isMouseOverSubtitleItem = action.payload;
     },
 
+    toggleTheme: (state, action) => {
+      state.theme = action.payload;
+    },
+
     addSubtitleItem: (state, action) => {
-      //console.log(current(state));
+      let startTime = "00:00:00,000";
+      let startTimeMs = 0;
+
+      let endTime = "00:00:04,000";
+      let endTimeMs = 4;
+
+      if (action.payload !== undefined) {
+        startTimeMs = action.payload;
+        startTime = convertSecToTimestring(startTimeMs);
+
+        endTimeMs = startTimeMs + 4;
+        endTime = convertSecToTimestring(endTimeMs);
+      }
+
       state.subtitleItems.push({
         id: uuidv4(),
-        startTime: "00:00:00,000",
-        startTimeMs: 0,
-        endTimeMs: 4,
-        endTime: "00:00:04,000",
+        startTime: startTime,
+        startTimeMs: startTimeMs,
+        endTimeMs: endTimeMs,
+        endTime: endTime,
         textContent: "",
         error: false,
       });
@@ -232,7 +245,6 @@ export const subtitleSlice = createSlice({
           break;
 
         case "startTime":
-          console.log(convertTimeToMs(action.payload.value).ms);
           updatedSubtitleItems = current(state).subtitleItems.map((item) =>
             item.id === action.payload.id
               ? {
@@ -246,7 +258,6 @@ export const subtitleSlice = createSlice({
           break;
 
         case "endTime":
-          console.log(action.payload.value);
           updatedSubtitleItems = current(state).subtitleItems.map((item) =>
             item.id === action.payload.id
               ? {
@@ -297,7 +308,6 @@ export const subtitleSlice = createSlice({
     createFinalSubtitles: (state, action) => {
       let finalContent = "";
       current(state).subtitleItems.forEach((item, index) => {
-        console.log(item);
         const itemString =
           index +
           1 +
@@ -327,6 +337,7 @@ export const {
   createFinalSubtitles,
   editSubtitleItemTimeline,
   toggleMouseOverSubtitleItem,
+  toggleTheme,
 } = subtitleSlice.actions;
 
 export default subtitleSlice.reducer;

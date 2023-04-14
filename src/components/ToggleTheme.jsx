@@ -6,8 +6,13 @@ import {
   MdOutlineDarkMode as DarkModeIcon,
 } from "react-icons/md";
 
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../features/subtitle/subtitleSlice";
+
 export default function ToggleTheme() {
-  const [theme, setTheme] = useState("light");
+  const dispatch = useDispatch();
+
+  const theme = useSelector((state) => state.subtitle.theme);
 
   useEffect(() => {
     if (theme === "dark") {
@@ -20,22 +25,24 @@ export default function ToggleTheme() {
   useEffect(() => {
     // when the page is rendered, check if a theme has been saved to local storage
     if (localStorage) {
-      setTheme(localStorage.getItem("theme"));
+      dispatch(toggleTheme(localStorage.getItem("theme")));
     }
   }, []);
 
   function toggleLightMode() {
     localStorage.setItem("theme", "light");
-    setTheme("light");
+    //setTheme("light");
+    dispatch(toggleTheme("light"));
   }
 
   function toggleDarkMode() {
     localStorage.setItem("theme", "dark");
-    setTheme("dark");
+    // setTheme("dark");
+    dispatch(toggleTheme("dark"));
   }
 
   return (
-    <div className="flex h-full items-center justify-center gap-4">
+    <div className="flex h-full items-center justify-center gap-1">
       <button
         onClick={toggleLightMode}
         alt="light mode"

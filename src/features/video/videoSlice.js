@@ -7,7 +7,7 @@ const initialState = {
   url: "",
   video: null,
   currentPlaytime: 0,
-  durationSec: 120,
+  durationSec: 300,
   durationArray: INITIAL_TIMELINE_LENGTH,
   currentPlaytimeTimeline: 0,
 };

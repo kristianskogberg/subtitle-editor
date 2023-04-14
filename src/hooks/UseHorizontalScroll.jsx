@@ -8,9 +8,7 @@ export function useHorizontalScroll() {
       const onWheel = (e) => {
         if (e.deltaY == 0) return;
         e.preventDefault();
-        el.scrollTo({
-          left: el.scrollLeft + e.deltaY,
-        });
+        // el.scrollTo({     left: el.scrollLeft + e.deltaY, });
       };
       el.addEventListener("wheel", onWheel);
       return () => el.removeEventListener("wheel", onWheel);

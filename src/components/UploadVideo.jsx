@@ -9,6 +9,7 @@ import {
   FiDownload as DownloadIcon,
 } from "react-icons/fi";
 import VideoPlayer from "./VideoPlayer";
+import ButtonSection from "./ButtonSection";
 
 export default function UploadVideo() {
   const videoUrl = useSelector((state) => state.video.url);
@@ -41,7 +42,7 @@ export default function UploadVideo() {
 
   return (
     <div className="flex  flex-col h-full aspect-video max-w-full z-10">
-      <div className=" flex h-full   rounded-xl">
+      <div className=" flex h-full flex-col  rounded-xl">
         {videoUrl === "" ? (
           <form
             onSubmit={handleSubmit}
@@ -63,49 +64,13 @@ export default function UploadVideo() {
             />
           </form>
         ) : (
-          <div className="flex w-full h-full">
+          <div className="flex w-full  flex-col">
             <div className="relative w-full h-full">
-              {/*  <div className="absolute text-3xl text-white   h-full w-full text-center">
-                <div className="h-full w-full flex items-end justify-center pb-10 whitespace-pre-wrap">
-                  <span>
-                    {subtitles?.map((item) => {
-                      if (
-                        item.startTimeMs > currentPlaytime ||
-                        item.endTimeMs < currentPlaytime
-                      ) {
-                        // do not show subtitle
-                        return;
-                      }
-                      return (
-                        <p className="bg-black bg-opacity-75" key={item.id}>
-                          {item.textContent}
-                        </p>
-                      );
-                    })}
-                  </span>
-                </div>
-                  </div> */}
               <div className="w-full"></div>
-              <VideoPlayer src={videoUrl} autoPlay={true} muted={true} />
-
-              {/* <ReactPlayer
-              config={{
-                file: {
-                  attributes: {
-                    crossOrigin: "true",
-                  },
-                },
-              }}
-              controls={true}
-              url={videoUrl}
-              muted={true}
-              playing={playing}
-              width={"100%"}
-              height={"auto"}
-            /> */}
+              <VideoPlayer src={videoUrl} autoPlay={false} muted={true} />
             </div>
           </div>
-        )}
+        )}{" "}
       </div>
     </div>
   );

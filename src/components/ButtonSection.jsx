@@ -46,13 +46,13 @@ export default function ButtonSection() {
   }, [content, downloadClicked]);
 
   return (
-    <div>
+    <>
       <Button
         text={"Download Subtitles"}
         icon={<DownloadIcon />}
         color={"primary"}
         onClick={handleDownloadSubtitles}
       />
-    </div>
+    </>
   );
 }
