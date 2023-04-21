@@ -17,7 +17,7 @@ export default function Edit() {
     <div className="flex flex-col px-4 lg:px-10 dark:bg-gray-900 w-full h-full lg:h-[calc(100vh-40px)]   text-black dark:text-white">
       <div className="flex flex-col h-full ">
         <div className="flex   flex-col-reverse lg:flex-row w-full h-[80%]  dark:bg-gray-900">
-          <div className="flex w-full h-full lg:max-w-[500px]  ">
+          <div className="flex w-full h-full lg:max-w-[600px]  ">
             <UploadSubtitles />
           </div>
           <div className="flex justify-center w-full h-full ">

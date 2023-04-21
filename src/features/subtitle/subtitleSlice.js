@@ -256,6 +256,20 @@ export const subtitleSlice = createSlice({
           );
           state.subtitleItems = updatedSubtitleItems;
           break;
+        case "startTimeMs":
+          updatedSubtitleItems = current(state).subtitleItems.map((item) =>
+            item.id === action.payload.id
+              ? {
+                  ...item,
+                  startTime: convertSecToTimestring(
+                    item.startTimeMs + action.payload.value
+                  ),
+                  startTimeMs: item.startTimeMs + action.payload.value,
+                }
+              : item
+          );
+          state.subtitleItems = updatedSubtitleItems;
+          break;
 
         case "endTime":
           updatedSubtitleItems = current(state).subtitleItems.map((item) =>
@@ -272,6 +286,81 @@ export const subtitleSlice = createSlice({
 
         default:
           break;
+      }
+    },
+    rewindSubtitleItem: (state, action) => {
+      let updatedSubtitleItems = [];
+
+      if (action.payload.time === "startTime") {
+        const currentValue = current(state).subtitleItems.find(
+          (obj) => obj.id === action.payload.id
+        );
+
+        if (currentValue?.startTimeMs <= 0) return;
+
+        updatedSubtitleItems = current(state).subtitleItems.map((item) =>
+          item.id === action.payload.id
+            ? {
+                ...item,
+                startTime: convertSecToTimestring(
+                  item.startTimeMs - action.payload.value
+                ),
+                startTimeMs: item.startTimeMs - action.payload.value,
+              }
+            : item
+        );
+        state.subtitleItems = updatedSubtitleItems;
+      } else if (action.payload.time === "endTime") {
+        const currentValue = current(state).subtitleItems.find(
+          (obj) => obj.id === action.payload.id
+        );
+
+        if (currentValue?.endTimeMs <= 0) return;
+
+        updatedSubtitleItems = current(state).subtitleItems.map((item) =>
+          item.id === action.payload.id
+            ? {
+                ...item,
+                endTime: convertSecToTimestring(
+                  item.endTimeMs - action.payload.value
+                ),
+                endTimeMs: item.endTimeMs - action.payload.value,
+              }
+            : item
+        );
+        state.subtitleItems = updatedSubtitleItems;
+      }
+    },
+
+    fastForwardSubtitleItem: (state, action) => {
+      let updatedSubtitleItems = [];
+
+      if (action.payload.time === "startTime") {
+        updatedSubtitleItems = current(state).subtitleItems.map((item) =>
+          item.id === action.payload.id
+            ? {
+                ...item,
+                startTime: convertSecToTimestring(
+                  item.startTimeMs + action.payload.value
+                ),
+                startTimeMs: item.startTimeMs + action.payload.value,
+              }
+            : item
+        );
+        state.subtitleItems = updatedSubtitleItems;
+      } else if (action.payload.time === "endTime") {
+        updatedSubtitleItems = current(state).subtitleItems.map((item) =>
+          item.id === action.payload.id
+            ? {
+                ...item,
+                endTime: convertSecToTimestring(
+                  item.endTimeMs + action.payload.value
+                ),
+                endTimeMs: item.endTimeMs + action.payload.value,
+              }
+            : item
+        );
+        state.subtitleItems = updatedSubtitleItems;
       }
     },
 
@@ -338,6 +427,8 @@ export const {
   editSubtitleItemTimeline,
   toggleMouseOverSubtitleItem,
   toggleTheme,
+  rewindSubtitleItem,
+  fastForwardSubtitleItem,
 } = subtitleSlice.actions;
 
 export default subtitleSlice.reducer;

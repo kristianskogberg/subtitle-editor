@@ -50,7 +50,7 @@ export default function DraggableSubtitle({ item, index, zoomLevel }) {
       height: 60,
     });
     setXPosition(item.startTimeMs * zoomLevel);
-  }, [zoomLevel]);
+  }, [zoomLevel, subtitleItems]);
 
   function handleMouseLeave() {
     setMouseHover(false);

@@ -10,8 +10,13 @@ import {
   editSubtitleItem,
   deleteSubtitleItem,
   createFinalSubtitles,
+  rewindSubtitleItem,
+  fastForwardSubtitleItem,
 } from "../features/subtitle/subtitleSlice";
-
+import {
+  FiPlusSquare as PlusIcon,
+  FiMinusSquare as MinusIcon,
+} from "react-icons/fi";
 import { AiOutlineFileAdd as AddFileIcon } from "react-icons/ai";
 import { IoClose as DeleteIcon } from "react-icons/io5";
 import { BiTimeFive as TimeIcon } from "react-icons/bi";
@@ -137,6 +142,26 @@ export default function UploadSubtitles() {
     );
   }
 
+  function handleRewindSubtitleItem(id, time) {
+    dispatch(
+      rewindSubtitleItem({
+        id: id,
+        value: 0.05,
+        time: time,
+      })
+    );
+  }
+
+  function handleFastForwardSubtitleItem(id, time) {
+    dispatch(
+      fastForwardSubtitleItem({
+        id: id,
+        value: 0.05,
+        time: time,
+      })
+    );
+  }
+
   return (
     <div className="flex flex-col p-1 lg:p-6 h-full w-full ">
       {subtitleItems.length === 0 ? (
@@ -167,7 +192,7 @@ export default function UploadSubtitles() {
         </form>
       ) : (
         <div className="h-[37vh] lg:h-[calc(60vh+10px)] border-2 border-gray-400 flex flex-col overflow-auto  w-full justify-start  items-center">
-          <form className="h-full   w-full overflow-auto   ">
+          <div className="h-full   w-full overflow-auto   ">
             {subtitleItems.map((item, index) => {
               return (
                 <div
@@ -178,47 +203,62 @@ export default function UploadSubtitles() {
                   }   `}
                   key={item.id}
                 >
-                  {/*
-
-                  <div className="relative ">
-                    <code className="absolute z-10 mx-2 text-gray-600 dark:text-gray-300">
-                      {index + 1}
-                    </code>
-                  </div>
-
-                  <div className="relative ">
-                    <button
-                      type="button"
-                      onClick={(e) => handleDeleteSubtitleItem(e, item.id)}
-                      className="absolute z-10 right-0 mx-2 my-1 text-xl text-gray-600 dark:text-gray-300 "
-                    >
-                      <DeleteIcon />
-                    </button>
-                  </div>
-                */}
-
-                  <div className="grid grid-cols-1 gap-3 p-2">
-                    <div className="flex   w-full justify-between items-center">
+                  <div className="flex flex-col gap-3 p-2">
+                    <div className="flex   w-full  items-center">
                       <label className="pr-2 ">{index + 1}</label>
 
-                      <div className="relative ">
-                        <span className="absolute inset-y-0 left-1 flex items-center pl-1">
-                          <TimeIcon size={20} />
-                        </span>
-                        <label className="py-1 px-4 text-sm  w-full rounded-lg pl-8  ">
-                          {item.startTime}
-                        </label>
-                      </div>
-                      <div className="text-black px-3 dark:text-white flex items-center  justify-center">
-                        <RightArrowIcon size={24} />
-                      </div>
-                      <div className="relative ">
-                        <span className="absolute inset-y-0 left-1 flex items-center pl-1">
-                          <TimeIcon size={20} />
-                        </span>
-                        <label className="py-1 px-4 text-sm  w-full rounded-lg pl-8  ">
-                          {item.endTime}
-                        </label>
+                      <div className="flex w-full justify-center items-center">
+                        <button
+                          className="text-gray-500"
+                          onClick={() =>
+                            handleRewindSubtitleItem(item.id, "startTime")
+                          }
+                        >
+                          <MinusIcon size={24} />
+                        </button>
+                        <div className="relative  ">
+                          <span className="absolute inset-y-0 left-1 flex items-center pl-1">
+                            <TimeIcon size={20} />
+                          </span>
+                          <label className="py-1 px-3  text-sm  w-full rounded-lg pl-8  ">
+                            {item.startTime}
+                          </label>
+                        </div>
+                        <button
+                          className="text-gray-500"
+                          onClick={() =>
+                            handleFastForwardSubtitleItem(item.id, "startTime")
+                          }
+                        >
+                          <PlusIcon size={24} />
+                        </button>
+                        <div className="text-black px-3 dark:text-white flex items-center  justify-center">
+                          <RightArrowIcon size={24} />
+                        </div>
+                        <button
+                          className="text-gray-500"
+                          onClick={() =>
+                            handleRewindSubtitleItem(item.id, "endTime")
+                          }
+                        >
+                          <MinusIcon size={24} />
+                        </button>
+                        <div className="relative ">
+                          <span className="absolute inset-y-0 left-1 flex items-center pl-1">
+                            <TimeIcon size={20} />
+                          </span>
+                          <label className="py-1 px-2 text-sm  w-full rounded-lg pl-8  ">
+                            {item.endTime}
+                          </label>
+                        </div>
+                        <button
+                          className="text-gray-500"
+                          onClick={() =>
+                            handleFastForwardSubtitleItem(item.id, "endTime")
+                          }
+                        >
+                          <PlusIcon size={24} />
+                        </button>
                       </div>
                       <div className="relative pl-2 ">
                         <button
@@ -253,7 +293,7 @@ export default function UploadSubtitles() {
                 icon={<AddIcon size={24} />}
               />
             </div>
-          </form>
+          </div>
         </div>
       )}
 
